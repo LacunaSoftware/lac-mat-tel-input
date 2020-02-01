@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "lac-mat-tel-input": [
+        "dist/lac-mat-tel-input"
+      ],
+      "lac-mat-tel-input/*": [
+        "dist/lac-mat-tel-input/*"
+      ]
+    }
   }
 }
