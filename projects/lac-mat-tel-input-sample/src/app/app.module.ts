@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatButtonModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatDividerModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
+import { LacMatTelInputModule } from 'projects/lac-mat-tel-input/src/public_api';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AppComponent } from './app.component';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    LacMatTelInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
