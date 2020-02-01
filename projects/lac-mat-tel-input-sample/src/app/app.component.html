@@ -7,13 +7,13 @@
   </div>
   <mat-form-field style="width: 100%;">
     <mat-label>Phone number</mat-label>
-    <lac-mat-country-selector matPrefix [preferredCountries]="['br']"></lac-mat-country-selector>
+    <lac-mat-country-selector matPrefix></lac-mat-country-selector>
     <input type="text" matInput />
   </mat-form-field>
 
   <mat-form-field style="width: 100%;">
     <mat-label>Phone number</mat-label>
-    <lac-mat-country-selector matPrefix [preferredCountries]="['br']" [selectorFor]="input" [showDialCode]="false"></lac-mat-country-selector>
+    <lac-mat-country-selector matPrefix [preferredCountries]="['br']" [selectorFor]="input" [showDialCode]="false" searchPlaceholder="Search..." [disableSearch]="false"></lac-mat-country-selector>
     <lac-mat-tel-input #input></lac-mat-tel-input>
   </mat-form-field>
   

@@ -39,6 +39,22 @@
   vertical-align: middle;
 }
 
+.country-search-container {
+  padding: 10px;
+}
+
+.mat-form-field.country-search {
+  width: 100%;
+
+  .mat-form-field-infix {
+    padding: 0px 0 10px 0;
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0px;
+  }
+}
+
 /* FLAGS */
 .flag.KY {
     background-position: 0 0;

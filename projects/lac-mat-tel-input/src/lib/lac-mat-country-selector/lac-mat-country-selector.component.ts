@@ -1,15 +1,17 @@
-import { Component, OnInit, Input, EventEmitter, OnDestroy, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, OnDestroy, Output, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Country } from '../model/country.model';
 import { CountryCode } from '../data/country-code';
 import { CountryCode as LibCountryCode }  from 'libphonenumber-js';
 import { LacMatTelInputComponent } from '../lac-mat-tel-input.component';
 import { Observable, Subscription } from 'rxjs';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'lac-mat-country-selector',
   templateUrl: './lac-mat-country-selector.component.html',
   styleUrls: ['./lac-mat-country-selector.component.scss'],
-  providers: [CountryCode]
+  providers: [CountryCode],
+  encapsulation: ViewEncapsulation.None
 })
 export class LacMatCountrySelectorComponent implements OnInit, OnDestroy {
 
@@ -21,6 +23,10 @@ export class LacMatCountrySelectorComponent implements OnInit, OnDestroy {
   onlyCountries: Array<string> = [];
   @Input()
   showDialCode?: boolean;
+  @Input()
+  disableSearch?: boolean;
+  @Input()
+  searchPlaceholder?: string;
 
   @Output()
   change: EventEmitter<Country> = new EventEmitter<Country>();
@@ -28,6 +34,9 @@ export class LacMatCountrySelectorComponent implements OnInit, OnDestroy {
   selectedCountry: Country;
   allCountries: Array<Country> = [];
   preferredCountriesInDropDown: Array<Country> = [];
+  
+  searchQuery: string;
+  @ViewChild('searchInput') searchInput: MatInput;
 
   private countrySubscription: Subscription;
 
@@ -107,6 +116,16 @@ export class LacMatCountrySelectorComponent implements OnInit, OnDestroy {
 
     this.selectedCountry = country;
     this.change.next(country);
+  }
+
+  onOpenMenuClick() {
+    if (!this.disableSearch && this.searchInput) {
+      setTimeout(() => this.searchInput.focus());
+    }
+  }
+
+  onMenuClosed() {
+    this.searchQuery = '';
   }
 
 }

@@ -4,9 +4,10 @@ import { MatMenuModule, MatDividerModule, MatButtonModule, MatInputModule } from
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LacMatCountrySelectorComponent } from './lac-mat-country-selector/lac-mat-country-selector.component';
+import { SearchPipe } from './search.pipe';
 
 @NgModule({
-  declarations: [LacMatTelInputComponent, LacMatCountrySelectorComponent],
+  declarations: [LacMatTelInputComponent, LacMatCountrySelectorComponent, SearchPipe],
   imports: [
     CommonModule,
     FormsModule,
