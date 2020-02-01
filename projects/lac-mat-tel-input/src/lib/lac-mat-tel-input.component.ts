@@ -4,36 +4,27 @@ import { Subject } from 'rxjs';
 import { NgControl, NgModel } from '@angular/forms';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { getExampleNumber, parsePhoneNumberFromString, AsYouType } from 'libphonenumber-js';
-import { CountryCode as LibCountryCode }  from 'libphonenumber-js';
-import { Examples, CountryCode } from './data/country-code';
-import { Country } from './model/country.model';
+import { getExampleNumber, parsePhoneNumberFromString, AsYouType, CountryCode } from 'libphonenumber-js';
+import { Examples } from './data/country-code';
 
 @Component({
   selector: 'lac-mat-tel-input',
   templateUrl: './lac-mat-tel-input.component.html',
   styleUrls: ['./lac-mat-tel-input.component.scss'],
-  providers: [{provide: MatFormFieldControl, useExisting: LacMatTelInputComponent}, CountryCode]
+  providers: [{provide: MatFormFieldControl, useExisting: LacMatTelInputComponent}]
 })
 export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldControl<any> {
 
   phone: string;
-  maxInputLength: number = 20;
-  private get countryCode(): LibCountryCode {
-    return <LibCountryCode> this.selectedCountry.flagClass;
-  }
-
-  allCountries: Array<Country> = [];
-  preferredCountriesInDropDown: Array<Country> = [];
-  selectedCountry: Country;
-
   @ViewChild('phoneInput') phoneInput: MatInput;
 
+  maxInputLength: number = 20;
 
-  @Input() preferredCountries: Array<string> = [];
-  @Input() onlyCountries: Array<string> = [];
-  @Output()
-  countryChanged: EventEmitter<Country> = new EventEmitter<Country>();
+  //Subject to notify when country needs to be update from input
+  //Se paste condition in onInputChanged
+  countryChange = new Subject<CountryCode>();
+  
+  private selectedCountry: CountryCode;
 
   //Mat Form Field implementation - BEGIN
   stateChanges = new Subject<void>();
@@ -111,7 +102,6 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
   constructor(
     @Optional() @Self() public ngControl: NgControl,
     private fm: FocusMonitor,
-    private countryCodeData: CountryCode,
     private elRef: ElementRef<HTMLElement>,
     private changeDetector: ChangeDetectorRef
   ) { 
@@ -119,68 +109,23 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
       this.focused = !!origin;
       this.stateChanges.next();
     });
-
-    this.fetchCountryData();
-  }
-
-  //builds the All Countries array
-  protected fetchCountryData(): void {
-    this.countryCodeData.allCountries.forEach(c => {
-      const country: Country = {
-        name: c[0].toString(),
-        iso2: c[1].toString(),
-        dialCode: c[2].toString(),
-        priority: +c[3] || 0,
-        areaCodes: c[4] as string[] || undefined,
-        flagClass: c[1].toString().toUpperCase(),
-        placeHolder: ''
-      };
-
-      // if (this.enablePlaceholder) {
-      //   country.placeHolder = NgxMatIntlTelInputComponent.getPhoneNumberPlaceHolder(country.iso2.toUpperCase());
-      // }
-
-      this.allCountries.push(country);
-    });
   }
 
   //lifecycle
   ngOnInit() {
-    //build preferred countries arrays if they are specified
-    if (this.preferredCountries.length) {
-      this.preferredCountries.forEach(iso2 => {
-        const preferredCountry = this.allCountries.filter((c) => {
-          return c.iso2 === iso2;
-        });
-        this.preferredCountriesInDropDown.push(preferredCountry[0]);
-      });
-    }
-
-    //filter countries if required
-    if (this.onlyCountries.length) {
-      this.allCountries = this.allCountries.filter(c => this.onlyCountries.includes(c.iso2));
-    }
-
-    //set the default selected a country
-    if (this.preferredCountriesInDropDown.length) {
-      this.selectedCountry = this.preferredCountriesInDropDown[0];
-    } else {
-      this.selectedCountry = this.allCountries[0];
-    }
-
-    this.selectCountry(this.selectedCountry);
+    
   }
 
   ngOnDestroy(): void {
     this.fm.stopMonitoring(this.elRef.nativeElement);
+    this.countryChange.complete();
     this.stateChanges.complete();
   }
 
-  selectCountry(country: Country, noPhoneReset?: boolean) {
-    let hasCountryChanged = this.selectedCountry.iso2 != country.iso2;
-    this.selectedCountry = country;
+  onCountrySelected(code: CountryCode, noPhoneReset?: boolean) {
+    let hasCountryChanged = this.selectedCountry && this.selectedCountry != code;
+    this.selectedCountry = code;
 
-    let code = this.countryCode;
     let example = getExampleNumber(code, Examples).formatNational();
     let numbersOnly = example.replace(/[^\d]/g, '');
     let maxExample = numbersOnly + '9999999999';
@@ -192,11 +137,10 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
       let test = maxExample.substring(0, i);
       let testPhone = parsePhoneNumberFromString(test, code);
 
-      //TODO consider only national
       if (testPhone && testPhone.isValid()) {
         let maxInput = new AsYouType(code).input(test);
         this.maxInputLength = maxInput.length;
-        this.placeholder = maxInput;
+        this.placeholder = maxInput;//TODO set placeholder optionally
         console.log('Max length is', this.maxInputLength);//TODO remove
         break;
       }
@@ -211,15 +155,6 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
         setTimeout(() => this.phoneInput.focus());
       }
     }
-
-    // if (this.elRef.nativeElement.lastChild) {
-    //   let input = this.elRef.nativeElement.lastChild as HTMLInputElement;
-    //   console.log(input);
-    //   input.focus();
-    //   this.changeDetector.detectChanges();
-    // }
-
-    this.countryChanged.emit(this.selectedCountry);
   }
 
   onInputChanged(e: string) {
@@ -230,19 +165,17 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
         let pastedNumber  = parsePhoneNumberFromString(e);
 
         if (pastedNumber && pastedNumber.country) {
-          console.log('pasted country', pastedNumber.country);//TODO remove
-          let phoneCountry = this.allCountries.filter((c) => {
-            return c.flagClass === pastedNumber.country.toString();
-          });
+          let code = pastedNumber.country;
+          console.log('pasted country', code);//TODO remove
+          
+          this.onCountrySelected(code, true);
 
-          if (phoneCountry.length) {
-            console.log('selected:', phoneCountry);//TODO remove
-            this.selectCountry(phoneCountry[0], true);
-            setTimeout(() => {
-              this.phone = pastedNumber.formatNational();
-            });
-            return;
-          }
+          this.countryChange.next(code);
+
+          setTimeout(() => {
+            this.phone = pastedNumber.formatNational();
+          });
+          return;
         }
       } catch {
       }
@@ -251,17 +184,16 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
     let numbersOnly = e.replace(/[^\d]/g, '');
 
     setTimeout(() => {
-      let formatted = new AsYouType(this.countryCode).input(numbersOnly);
+      let formatted = new AsYouType(this.selectedCountry).input(numbersOnly);
       //if the formatted output equals what we already have then the user is trying to delete a symbol inserted by
       //the formatted version
       console.log('formatted: ' + formatted);
-      console.log('fm2: ' + parsePhoneNumberFromString(numbersOnly));
+      // console.log('fm2: ' + parsePhoneNumberFromString(numbersOnly));
       this.phone = formatted.substr(0, formatted.length - 1) === this.phone ? numbersOnly : formatted;
 
       //TODO should I be doing this?
       this.value = this.phone;
       this.stateChanges.next(this.value);
-      
     }, 0);
   }
 
