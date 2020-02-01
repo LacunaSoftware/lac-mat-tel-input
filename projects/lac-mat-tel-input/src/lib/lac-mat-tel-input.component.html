@@ -3,5 +3,5 @@
   (keypress)="onInputKeyPress($event)"
   (ngModelChange)="onInputChanged($event)"
   [disabled]="inputDisabled"
-  [maxlength]="maxInputLength"
+  [maxlength]="!phone ? PhoneNumberMaxDigits : maxInputLength"
   [placeholder]="placeholder"  />

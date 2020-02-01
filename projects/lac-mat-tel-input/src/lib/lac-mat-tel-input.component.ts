@@ -14,11 +14,12 @@ import { Examples } from './data/country-code';
   providers: [{provide: MatFormFieldControl, useExisting: LacMatTelInputComponent}]
 })
 export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldControl<any> {
+  PhoneNumberMaxDigits: number = 20;
 
   phone: string;
   @ViewChild('phoneInput') phoneInput: MatInput;
 
-  maxInputLength: number = 20;
+  maxInputLength: number = this.PhoneNumberMaxDigits;
 
   //Subject to notify when country needs to be update from input
   //Se paste condition in onInputChanged
@@ -130,7 +131,7 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
     let numbersOnly = example.replace(/[^\d]/g, '');
     let maxExample = numbersOnly + '9999999999';
 
-    this.maxInputLength = 20;
+    this.maxInputLength = this.PhoneNumberMaxDigits;
 
     //find out the maximum (formatted) size a valid number for the country can have
     for (let i = maxExample.length; i >= 0; i--) {
@@ -166,7 +167,7 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
 
         if (pastedNumber && pastedNumber.country) {
           let code = pastedNumber.country;
-          console.log('pasted country', code);//TODO remove
+          console.log('pasted country', e);//TODO remove
           
           this.onCountrySelected(code, true);
 
