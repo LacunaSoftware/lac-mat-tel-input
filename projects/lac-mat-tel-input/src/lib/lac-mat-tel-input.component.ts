@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { NgControl, NgModel } from '@angular/forms';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { getExampleNumber, parsePhoneNumberFromString, AsYouType, CountryCode } from 'libphonenumber-js';
+import { getExampleNumber, parsePhoneNumberFromString, AsYouType, CountryCode, getCountryCallingCode } from 'libphonenumber-js';
 import { Examples } from './data/country-code';
 
 @Component({
@@ -13,7 +13,7 @@ import { Examples } from './data/country-code';
   styleUrls: ['./lac-mat-tel-input.component.scss'],
   providers: [{provide: MatFormFieldControl, useExisting: LacMatTelInputComponent}]
 })
-export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldControl<any> {
+export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldControl<string> {
   PhoneNumberMaxDigits: number = 20;
 
   phone: string;
@@ -31,7 +31,12 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
   stateChanges = new Subject<void>();
 
   //the value of the FormFieldControl
-  value: any;//whenever value changes -> this.stateChanges.next(); so form-field runs change detection
+  _value: string;
+  set value(v: string | null) {//whenever value changes -> this.stateChanges.next(); so form-field runs change detection
+    this._value =  v ? `+${getCountryCallingCode(this.selectedCountry)} ${v}` : v;
+    this.propagateChange(this._value);
+    this.stateChanges.next();
+  };
 
   //the id of an element to associate labels and hints with.
   static nextId = 0;
@@ -39,7 +44,7 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
 
   //placeholder
   private _placeholder: string;
-  @Input()
+
   get placeholder(): string {
     return this._placeholder;
   };
@@ -75,14 +80,15 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
 
   private inputDisabled = false;
   @Input()
-  get disabled(): boolean { return this.inputDisabled; }
+  get disabled(): boolean { return this.inputDisabled || this.ngControl.disabled; }
   set disabled(value: boolean) {
     this.inputDisabled = coerceBooleanProperty(value);
     this.stateChanges.next();
   }
 
-  //TODO
-  errorState: boolean = false;
+  get errorState() {
+    return this.ngControl && this.ngControl.errors !== null && !!this.ngControl.touched;
+  }
 
   controlType?: string = 'mat-tel';
 
@@ -95,10 +101,31 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
   }
 
   onContainerClick(event: MouseEvent): void {
-    //TODO
-    
+    if (!this.disabled) {
+      this.onTouched();
+    }
   }
   //Mat Form Field implementation - END
+
+  //ControlValueAccessor - BEGIN
+  writeValue(value: string): void {
+    this.onInputChanged(value);
+  }
+
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
+  }
+
+  onTouched = () => {
+  }
+
+  propagateChange = (_: any) => {
+  }
+  //ControlValueAccessor - END
 
   constructor(
     @Optional() @Self() public ngControl: NgControl,
@@ -106,6 +133,12 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
     private elRef: ElementRef<HTMLElement>,
     private changeDetector: ChangeDetectorRef
   ) { 
+     if (this.ngControl != null) {
+      // Setting the value accessor directly (instead of using
+      // the providers) to avoid running into a circular import.
+      this.ngControl.valueAccessor = this;
+    }
+
     fm.monitor(elRef.nativeElement, true).subscribe(origin => {
       this.focused = !!origin;
       this.stateChanges.next();
@@ -142,7 +175,6 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
         let maxInput = new AsYouType(code).input(test);
         this.maxInputLength = maxInput.length;
         this.placeholder = maxInput;//TODO set placeholder optionally
-        console.log('Max length is', this.maxInputLength);//TODO remove
         break;
       }
     }
@@ -150,6 +182,7 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
     //when new country is selected reset phone if phone reset was not disabled 
     if (hasCountryChanged && !noPhoneReset) {
       this.phone = '';
+      this.value = this.phone;
 
       //focus on input
       if (this.phoneInput) {
@@ -159,6 +192,10 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
   }
 
   onInputChanged(e: string) {
+    if (!e) {
+      e = '';
+    }
+    
     this.phone = e;
 
     if (e.startsWith('+')) {//handles pasting of a complete international number
@@ -167,7 +204,6 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
 
         if (pastedNumber && pastedNumber.country) {
           let code = pastedNumber.country;
-          console.log('pasted country', e);//TODO remove
           
           this.onCountrySelected(code, true);
 
@@ -175,6 +211,7 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
 
           setTimeout(() => {
             this.phone = pastedNumber.formatNational();
+            this.value = this.phone;
           });
           return;
         }
@@ -188,13 +225,8 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
       let formatted = new AsYouType(this.selectedCountry).input(numbersOnly);
       //if the formatted output equals what we already have then the user is trying to delete a symbol inserted by
       //the formatted version
-      console.log('formatted: ' + formatted);
-      // console.log('fm2: ' + parsePhoneNumberFromString(numbersOnly));
       this.phone = formatted.substr(0, formatted.length - 1) === this.phone ? numbersOnly : formatted;
-
-      //TODO should I be doing this?
       this.value = this.phone;
-      this.stateChanges.next(this.value);
     }, 0);
   }
 

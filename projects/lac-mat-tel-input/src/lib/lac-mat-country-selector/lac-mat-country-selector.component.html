@@ -1,5 +1,5 @@
 <ng-container *ngIf="selectedCountry">
-  <button type="button" [matMenuTriggerFor]="menu" mat-button class="country-selector" (click)="onOpenMenuClick()">
+  <button type="button" [matMenuTriggerFor]="menu" mat-button class="country-selector" (click)="onOpenMenuClick()" [disabled]="disabled">
     <span class="country-selector-flag flag" [ngClass]="selectedCountry.flagClass"></span>
     <span class="country-selector-code" [hidden]="!showDialCode">+{{selectedCountry.dialCode}}</span>
     <span class="country-arrow"></span>

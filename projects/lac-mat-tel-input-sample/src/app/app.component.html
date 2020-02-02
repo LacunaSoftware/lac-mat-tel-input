@@ -5,16 +5,69 @@
       Welcome to {{ title }}!
     </h1>
   </div>
-  <mat-form-field style="width: 100%;">
-    <mat-label>Phone number</mat-label>
-    <lac-mat-country-selector matPrefix></lac-mat-country-selector>
-    <input type="text" matInput />
-  </mat-form-field>
 
+  <h2>Form sample</h2>
+  <form [formGroup]="form1">
+    <mat-form-field style="width: 100%;">
+      <mat-label>Phone</mat-label>
+      <lac-mat-country-selector matPrefix [preferredCountries]="['br']" [selectorFor]="input1"></lac-mat-country-selector>
+      <lac-mat-tel-input #input1 formControlName="phone"></lac-mat-tel-input>
+      <mat-error>Invalid phone</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="name" />
+    </mat-form-field>
+  </form>
+
+  <div style="display: flex;">
+    <div>
+      <div><strong>Is input valid:</strong>
+        <pre>{{ !form1.controls['phone'].invalid }}</pre>
+      </div>
+      <div><strong>Is input touched:</strong>
+        <pre>{{ form1.controls['phone'].touched }}</pre>
+      </div>
+      <div><strong>Is form valid:</strong>
+        <pre>{{ form1.valid }}</pre>
+      </div>
+      <div><strong>Form value:</strong>
+        <pre>{{ form1.value | json }}</pre>
+      </div>
+      <div><strong>Form validation errors:</strong>
+        <pre>{{ form1.controls['phone'].errors | json }}</pre>
+      </div>
+    </div>
+    <div>
+      <button type="button" mat-button color="primary" (click)="toggleDisable('phone')">Disable/Enable</button>
+      <button type="button" mat-button color="primary" (click)="toggleDisable('name')">Disable/Enable Name</button>
+      <button type="button" mat-button color="warn" (click)="form1.reset()">Reset form</button>
+    </div>
+  </div>
+
+  <h2>ngModel</h2>
   <mat-form-field style="width: 100%;">
     <mat-label>Phone number</mat-label>
-    <lac-mat-country-selector matPrefix [preferredCountries]="['br']" [selectorFor]="input" [showDialCode]="false" searchPlaceholder="Search..." [disableSearch]="false"></lac-mat-country-selector>
-    <lac-mat-tel-input #input></lac-mat-tel-input>
+    <lac-mat-country-selector matPrefix [preferredCountries]="['br']" [selectorFor]="modelInput"></lac-mat-country-selector>
+    <lac-mat-tel-input [(ngModel)]="phone" #modelInput [disabled]="phoneDisabled"></lac-mat-tel-input>
   </mat-form-field>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input type="text" matInput [(ngModel)]="name" [disabled]="nameDisabled" />
+  </mat-form-field>
+  <div style="display: flex;">
+    <div>
+      <div><strong>phone:</strong>
+        <pre>{{ phone }}</pre>
+      </div>
+      <div><strong>name:</strong>
+        <pre>{{ name }}</pre>
+      </div>
+    </div>
+    <div>
+      <button type="button" mat-button color="primary" (click)="phoneDisabled = !phoneDisabled">Disable/Enable</button>
+      <button type="button" mat-button color="primary" (click)="nameDisabled = !nameDisabled">Disable/Enable Name</button>
+    </div>
+  </div>
   
 </div>

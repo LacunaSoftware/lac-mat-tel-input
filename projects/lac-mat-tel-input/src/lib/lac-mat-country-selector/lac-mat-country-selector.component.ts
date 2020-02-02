@@ -34,6 +34,10 @@ export class LacMatCountrySelectorComponent implements OnInit, OnDestroy {
   selectedCountry: Country;
   allCountries: Array<Country> = [];
   preferredCountriesInDropDown: Array<Country> = [];
+
+  get disabled() : boolean {
+    return this.selectorFor && this.selectorFor.disabled;
+  }
   
   searchQuery: string;
   @ViewChild('searchInput') searchInput: MatInput;
