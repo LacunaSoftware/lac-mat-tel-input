@@ -1,6 +1,17 @@
 # Lacuna International Telephone Input for Angular Material (LacMatTelInput)
 
-An Angular Material package for entering and validating international telephone numbers. It adds a flag dropdown to any input, detects the user's country, displays a relevant placeholder and provides formatting/validation methods.
+An Angular Material package for entering and validating international telephone numbers. 
+
+This is a partial rewrite of [tanansatpal's ngx-mat-intl-tel-input] (https://github.com/tanansatpal/ngx-mat-intl-tel-input) which was the best angular material component I could find for this purpose 
+but I felt that the structure of the component needded too many changes.
+
+Main features: 
+
+- Country Selector with flag
+- Auto formatting when user types phone
+- Applies max length according with the country selected
+- Output is formatted (digits only coming soon)
+- Phone validator for Reactive Forms
 
 **Supports:**
 
@@ -18,18 +29,18 @@ An Angular Material package for entering and validating international telephone 
 
 ### Install This Library
 
-```$ npm install ngx-mat-intl-tel-input --save```
+```$ npm install lac-mat-tel-input --save```
 
 ## Usage
 
 ### Import
 
-Add ```NgxMatIntlTelInputModule``` to your module file:
+Add ```LacMatTelInputModule``` to your module file:
 
 ```javascript
 
 imports: [
-    NgxMatIntlTelInputModule,
+    LacMatTelInputModule,
   ]
 
 ```
@@ -38,47 +49,39 @@ imports: [
 
 Refer to main app in this repository for working example.
 
+TODO add StackBlitz code sample
+
 ```html
 
-<form #f="ngForm" [formGroup]="phoneForm">
-  <ngx-mat-intl-tel-input
-  [preferredCountries]="['us', 'gb']"
-  [enablePlaceholder]="true"
-  [enableSearch]="true"
-  name="phone"
-  formControlName="phone"></ngx-mat-intl-tel-input>
+<form [formGroup]="form">
+	<mat-form-field>
+		<mat-label>Phone</mat-label>
+		<lac-mat-country-selector matPrefix [selectorFor]="input"></lac-mat-country-selector>
+		<lac-mat-tel-input #input formControlName="phone"></lac-mat-tel-input>
+		<mat-error *ngIf="form.controls['phone']?.errors?.invalidPhone">Invalid phone</mat-error>
+    </mat-form-field>
 </form>
 
 ```
 
 ```html
 
-<form #f="ngForm" [formGroup]="phoneForm">
-  <ngx-mat-intl-tel-input
-  [preferredCountries]="['us', 'gb']"
-  [enablePlaceholder]="true"
-  [enableSearch]="true"
-  name="phone"
-  (countryChanged)="yourComponentMethodToTreatyCountryChangedEvent($event)" // $event is a instance of current select Country
-  formControlName="phone"></ngx-mat-intl-tel-input>
+<form [formGroup]="form">
+	<mat-form-field>
+		<mat-label>Phone</mat-label>
+		<lac-mat-country-selector matPrefix [selectorFor]="input"
+			[preferredCountries]="['us', 'gb']"
+			[onlyCountries]="['us', 'gb', 'es']"
+			[showDialCode]="false"
+			[disableSearch]="false"
+			searchPlaceholder="Search..."
+			(change)="onCountryChange($event)">
+		</lac-mat-country-selector>
+		<lac-mat-tel-input #input formControlName="phone">
+		</lac-mat-tel-input>
+    </mat-form-field>
 </form>
 
-```
-
-If you want to show the sample number for the country selected or errors , use mat-hint anf mat-error as
-
-```html
-<form #f="ngForm" [formGroup]="phoneForm">
-  <ngx-mat-intl-tel-input
-    [preferredCountries]="['us', 'gb']"
-    [onlyCountries]="['us', 'gb', 'es']"
-    [enablePlaceholder]="true"
-    name="phone"
-    formControlName="phone" #phone></ngx-mat-intl-tel-input>
-  <mat-hint>e.g. {{phone.selectedCountry.placeHolder}}</mat-hint>
-  <mat-error *ngIf="f.form.controls['phone']?.errors?.required">Required Field</mat-error>
-  <mat-error *ngIf="f.form.controls['phone']?.errors?.validatePhoneNumber">Invalid Number</mat-error>
-</form>
 ```
 
 ## Options
@@ -86,9 +89,10 @@ If you want to show the sample number for the country selected or errors , use m
 | Options                       | Type                   | Default            | Description                                                                         |
 | ------------------------------|------------------------|--------------------|-------------------------------------------------------------------------------------|
 | preferredCountries            | ```string[]```         | ```[]```           | List of country abbreviations, which will appear at the top.                        |
-| onlyCountries                 | ```string[]```         | ```[]```           | List of manually selected country abbreviations, which will appear in the dropdown. |                    |
-| enablePlaceholder             | ```boolean```          | ```true```         | Input placeholder text, which adapts to the country selected.                      |
-| enableSearch                  | ```boolean```          | ```false```        | Whether to display a search bar to help filter down the list of countries          |
+| onlyCountries                 | ```string[]```         | ```[]```           | List of manually selected country abbreviations, which will appear in the dropdown. |
+| showDialCode             		| ```boolean```          | ```false```        | Shows the country's dial code next to the flag                      				|
+| disableSearch                 | ```boolean```          | ```false```        | Whether to disable the search bar to help filter down the list of countries         |
+| searchPlaceholder             | ```string```           | ```null```         | The placeholder to display in the search bar 										|
 
 ## Library Contributions
 
