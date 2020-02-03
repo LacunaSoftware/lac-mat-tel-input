@@ -97,7 +97,7 @@ TODO add StackBlitz code sample
 ## Library Contributions
 
 - Fork repo.
-- Go to ```./projects/ngx-mat-intl-tel-input```
+- Go to ```./projects/lac-mat-tel-input```
 - Update ```./src/lib``` with new functionality.
 - Update README.md
 - Pull request.
