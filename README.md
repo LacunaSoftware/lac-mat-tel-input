@@ -48,9 +48,7 @@ imports: [
 
 ## Example
 
-Refer to main app in this repository for working example.
-
-TODO add StackBlitz code sample
+You can find a complete Stackblitz sample [here](https://stackblitz.com/edit/lac-mat-tel-input-sample).
 
 ```html
 
