@@ -12,6 +12,7 @@ Main features:
 - Applies max length according with the country selected
 - Output is formatted (digits only coming soon)
 - Phone validator for Reactive Forms
+- Automatically sets country when user pastes phone with the country's dial code
 
 **Supports:**
 

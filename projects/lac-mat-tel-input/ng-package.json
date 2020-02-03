@@ -3,7 +3,7 @@
   "dest": "../../dist/lac-mat-tel-input",
   "lib": {
     "entryFile": "src/public_api.ts",
-	"umdModuleIds": {
+    "umdModuleIds": {
       "libphonenumber": "^1.7.30"
     }
   }
