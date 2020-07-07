@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, HostBinding, Input, Optional, Self, ElementRef, ViewChild, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
-import { MatFormFieldControl, MatInput } from '@angular/material';
+import { MatFormFieldControl } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 import { Subject } from 'rxjs';
 import { NgControl, NgModel } from '@angular/forms';
 import { FocusMonitor } from '@angular/cdk/a11y';
@@ -17,7 +18,7 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
   PhoneNumberMaxDigits: number = 20;
 
   phone: string;
-  @ViewChild('phoneInput') phoneInput: MatInput;
+  @ViewChild('phoneInput', { static: true }) phoneInput: MatInput;
 
   maxInputLength: number = this.PhoneNumberMaxDigits;
 

@@ -4,7 +4,7 @@ import { CountryCode } from '../data/country-code';
 import { CountryCode as LibCountryCode }  from 'libphonenumber-js';
 import { LacMatTelInputComponent } from '../lac-mat-tel-input.component';
 import { Observable, Subscription } from 'rxjs';
-import { MatInput } from '@angular/material';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'lac-mat-country-selector',
@@ -40,7 +40,7 @@ export class LacMatCountrySelectorComponent implements OnInit, OnDestroy {
   }
   
   searchQuery: string;
-  @ViewChild('searchInput') searchInput: MatInput;
+  @ViewChild('searchInput', { static: false }) searchInput: MatInput;
 
   private countrySubscription: Subscription;
 
