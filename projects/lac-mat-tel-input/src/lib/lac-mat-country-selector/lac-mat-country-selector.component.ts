@@ -40,7 +40,7 @@ export class LacMatCountrySelectorComponent implements OnInit, OnDestroy {
   }
   
   searchQuery: string;
-  @ViewChild('searchInput', { static: false }) searchInput: MatInput;
+  @ViewChild('searchInput') searchInput: MatInput;
 
   private countrySubscription: Subscription;
 
