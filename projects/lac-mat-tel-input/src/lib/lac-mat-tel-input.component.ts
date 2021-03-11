@@ -15,6 +15,9 @@ import { Examples } from './data/country-code';
   providers: [{provide: MatFormFieldControl, useExisting: LacMatTelInputComponent}]
 })
 export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldControl<string> {
+  @Output()
+  blur: EventEmitter<any> = new EventEmitter<any>();
+
   PhoneNumberMaxDigits: number = 20;
 
   phone: string;
