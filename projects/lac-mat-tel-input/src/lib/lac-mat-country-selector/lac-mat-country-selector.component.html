@@ -11,21 +11,23 @@
       </mat-form-field>
     </div>
     
-    <button type="button" mat-menu-item class="country-list-button" *ngFor="let country of preferredCountriesInDropDown" (click)="selectCountry(country)">
-      <div class="icon-wrapper">
-        <div class="flag" [ngClass]="country.flagClass"></div>
-      </div>
-      <div class="label-wrapper">{{country.name}} +{{country.dialCode}}</div>
-    </button>
-    <mat-divider *ngIf="preferredCountriesInDropDown?.length"></mat-divider>
-    
-    <ng-container *ngFor="let country of allCountries">
-      <button type="button" mat-menu-item class="country-list-button" *ngIf="country.name | search:searchQuery" (click)="selectCountry(country)">
+    <div class="countries-container">
+      <button type="button" mat-menu-item class="country-list-button" *ngFor="let country of preferredCountriesInDropDown" (click)="selectCountry(country)">
         <div class="icon-wrapper">
           <div class="flag" [ngClass]="country.flagClass"></div>
         </div>
         <div class="label-wrapper">{{country.name}} +{{country.dialCode}}</div>
       </button>
-    </ng-container>
+      <mat-divider *ngIf="preferredCountriesInDropDown?.length"></mat-divider>
+      
+      <ng-container *ngFor="let country of allCountries">
+        <button type="button" mat-menu-item class="country-list-button" *ngIf="country.name | search:searchQuery" (click)="selectCountry(country)">
+          <div class="icon-wrapper">
+            <div class="flag" [ngClass]="country.flagClass"></div>
+          </div>
+          <div class="label-wrapper">{{country.name}} +{{country.dialCode}}</div>
+        </button>
+      </ng-container>
+    </div>
   </mat-menu>
 </ng-container>
