@@ -92,6 +92,7 @@ You can find a complete Stackblitz sample [here](https://stackblitz.com/edit/lac
 | showDialCode             		| ```boolean```          | ```false```        | Shows the country's dial code next to the flag                      				|
 | disableSearch                 | ```boolean```          | ```false```        | Whether to disable the search bar to help filter down the list of countries         |
 | searchPlaceholder             | ```string```           | ```null```         | The placeholder to display in the search bar 										|
+| maxHeightCountriesContainer   | ```number```           | ```null```         | The max number of height in px for countries-container					|
 
 ## Library Contributions
 

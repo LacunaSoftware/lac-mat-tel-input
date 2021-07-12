@@ -11,7 +11,7 @@
       </mat-form-field>
     </div>
     
-    <div class="countries-container">
+    <div class="countries-container" [ngStyle]="{'max-height': maxHeightCountriesContainer}">
       <button type="button" mat-menu-item class="country-list-button" *ngFor="let country of preferredCountriesInDropDown" (click)="selectCountry(country)">
         <div class="icon-wrapper">
           <div class="flag" [ngClass]="country.flagClass"></div>

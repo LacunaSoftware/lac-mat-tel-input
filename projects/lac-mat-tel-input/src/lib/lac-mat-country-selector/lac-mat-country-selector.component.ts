@@ -27,6 +27,8 @@ export class LacMatCountrySelectorComponent implements OnInit, OnDestroy {
   disableSearch?: boolean;
   @Input()
   searchPlaceholder?: string;
+  @Input()
+  maxHeightCountriesContainer?: number;
 
   @Output()
   change: EventEmitter<Country> = new EventEmitter<Country>();
