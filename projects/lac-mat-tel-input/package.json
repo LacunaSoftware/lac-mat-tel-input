@@ -1,6 +1,6 @@
 {
   "name": "lac-mat-tel-input",
-  "version": "2.0.0-alpha.2",
+  "version": "2.0.0",
   "author": {
     "name": "Andre Lourenco",
     "email": "andrefigueiralourenco@gmail.com"
@@ -13,6 +13,7 @@
     "ng5",
     "ng6",
     "ng7",
+    "ng9",
     "intl-tel-input",
     "ng-intl-tel-input",
     "phone number",
