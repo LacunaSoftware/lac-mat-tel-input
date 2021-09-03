@@ -14,6 +14,11 @@
           "options": {
             "tsConfig": "projects/lac-mat-tel-input/tsconfig.lib.json",
             "project": "projects/lac-mat-tel-input/ng-package.json"
+          },          
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lac-mat-tel-input/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -48,6 +53,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/lac-mat-tel-input-sample",
             "index": "projects/lac-mat-tel-input-sample/src/index.html",
             "main": "projects/lac-mat-tel-input-sample/src/main.ts",
@@ -85,6 +91,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }

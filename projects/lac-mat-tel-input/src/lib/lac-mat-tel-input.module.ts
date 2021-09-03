@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { LacMatTelInputComponent } from './lac-mat-tel-input.component';
-import { MatMenuModule, MatDividerModule, MatButtonModule, MatInputModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LacMatCountrySelectorComponent } from './lac-mat-country-selector/lac-mat-country-selector.component';

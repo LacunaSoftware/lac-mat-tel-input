@@ -16,8 +16,8 @@ Main features:
 
 **Supports:**
 
-- Angular 7
-- Angular Material 7
+- Angular 9
+- Angular Material 9
 - ReactiveFormsModule
 - FormsModule
 - Validation with [libphonenumber-js](https://github.com/catamphetamine/libphonenumber-js)

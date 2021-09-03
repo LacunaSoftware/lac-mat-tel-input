@@ -1,5 +1,6 @@
 <input type="text" matInput #phoneInput="matInput"
-  [ngModel]="phone" 
+  [ngModel]="phone"
+  (blur)="blur.emit($event)"
   (keypress)="onInputKeyPress($event)"
   (ngModelChange)="onInputChanged($event)"
   [disabled]="disabled"
