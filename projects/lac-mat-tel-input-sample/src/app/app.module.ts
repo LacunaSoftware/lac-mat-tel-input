@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { AppComponent } from './app.component';
 import { LacMatTelInputModule } from 'lac-mat-tel-input';
@@ -21,6 +22,7 @@ import { LacMatTelInputModule } from 'lac-mat-tel-input';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatSlideToggleModule,
     LacMatTelInputModule
   ],
   providers: [],

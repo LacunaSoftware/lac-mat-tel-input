@@ -38,6 +38,13 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
   _value: string;
   set value(v: string | null) {//whenever value changes -> this.stateChanges.next(); so form-field runs change detection
     this._value =  v ? `+${getCountryCallingCode(this.selectedCountry)} ${v}` : v;
+    if (this.internationalFormat && this._value) {
+      let phoneNumber = parsePhoneNumberFromString(this._value);
+
+      if (phoneNumber && phoneNumber.isValid()) {
+        this._value = phoneNumber.formatInternational();
+      }
+    }
     this.propagateChange(this._value);
     this.stateChanges.next();
   };
@@ -130,6 +137,16 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
   propagateChange = (_: any) => {
   }
   //ControlValueAccessor - END
+
+  private _internationalFormat = false;
+  @Input()
+  get internationalFormat() {
+    return this._internationalFormat;
+  }
+  set internationalFormat(format) {
+    this._internationalFormat = coerceBooleanProperty(format);
+    this.onInputChanged(this.phone);
+  }
 
   constructor(
     @Optional() @Self() public ngControl: NgControl,

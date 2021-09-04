@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
 
   name: string = '';
   nameDisabled: boolean;
+  useInternationalFormat: boolean;
 
   constructor(
     private fb: FormBuilder

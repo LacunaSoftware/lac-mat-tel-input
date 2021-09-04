@@ -92,6 +92,7 @@ You can find a complete Stackblitz sample [here](https://stackblitz.com/edit/lac
 | showDialCode             		| ```boolean```          | ```false```        | Shows the country's dial code next to the flag                      				|
 | disableSearch                 | ```boolean```          | ```false```        | Whether to disable the search bar to help filter down the list of countries         |
 | searchPlaceholder             | ```string```           | ```null```         | The placeholder to display in the search bar 										|
+| internationalFormat           | ```boolean```          | ```false```        | By default, phone numbers will be formated using the [AsYouType](https://github.com/catamphetamine/libphonenumber-js/#as-you-type-formatter) formatter. However, if you wish to use [INTERNATIONAL](https://github.com/catamphetamine/libphonenumber-js/#phonenumber) format set this to `true`										|
 
 ## Library Contributions
 
