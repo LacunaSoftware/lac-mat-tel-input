@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy, HostBinding, Input, Optional, Self, ElementRef, ViewChild, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
+import { Component, HostBinding, Input, Optional, Self, ElementRef, ViewChild, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
+import type { OnInit, OnDestroy } from '@angular/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { Subject } from 'rxjs';
-import { NgControl, NgModel } from '@angular/forms';
+import { NgControl } from '@angular/forms';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { getExampleNumber, parsePhoneNumberFromString, AsYouType, CountryCode, getCountryCallingCode } from 'libphonenumber-js';
