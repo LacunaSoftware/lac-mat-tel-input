@@ -4,7 +4,7 @@ import { CountryCode } from '../data/country-code';
 import { CountryCode as LibCountryCode }  from 'libphonenumber-js';
 import { LacMatTelInputComponent } from '../lac-mat-tel-input.component';
 import { Observable, Subscription } from 'rxjs';
-import { MatLegacyInput as MatInput } from '@angular/material/legacy-input';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'lac-mat-country-selector',

@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input, Optional, Self, ElementRef, ViewChild, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
 import type { OnInit, OnDestroy } from '@angular/core';
-import { MatLegacyFormFieldControl as MatFormFieldControl } from '@angular/material/legacy-form-field';
-import { MatLegacyInput as MatInput } from '@angular/material/legacy-input';
+import { MatFormFieldControl } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 import { Subject } from 'rxjs';
 import { NgControl } from '@angular/forms';
 import { FocusMonitor } from '@angular/cdk/a11y';
