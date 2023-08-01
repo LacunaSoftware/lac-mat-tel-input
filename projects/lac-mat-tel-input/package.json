@@ -37,6 +37,6 @@
     "@angular/common": "~9.1.11",
     "@angular/core": "~9.1.11",
     "@angular/forms": "~9.1.11",
-    "libphonenumber-js": "^1.7.30"
+    "libphonenumber-js": "^1.10.38"
   }
 }

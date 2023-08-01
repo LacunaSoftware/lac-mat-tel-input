@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LacMatCountrySelectorComponent } from './lac-mat-country-selector.component';
 
@@ -6,7 +6,7 @@ describe('LacMatCountrySelectorComponent', () => {
   let component: LacMatCountrySelectorComponent;
   let fixture: ComponentFixture<LacMatCountrySelectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ LacMatCountrySelectorComponent ]
     })
