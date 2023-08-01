@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormControl } from '@angular/forms';
 import { phoneNumberValidator } from 'projects/lac-mat-tel-input/src/lib/lac-mat-tel-input.validator';
 
 @Component({
@@ -10,7 +10,7 @@ import { phoneNumberValidator } from 'projects/lac-mat-tel-input/src/lib/lac-mat
 export class AppComponent implements OnInit {
   title = 'lac-mat-tel-input-sample';
 
-  form1: FormGroup;
+  form1: UntypedFormGroup;
 
   phone: string = '+5511912347894';
   phoneDisabled: boolean;
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   useInternationalFormat: boolean;
 
   constructor(
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {
   }
 
