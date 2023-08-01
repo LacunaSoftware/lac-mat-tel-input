@@ -28,18 +28,6 @@
             "tsConfig": "projects/lac-mat-tel-input/tsconfig.spec.json",
             "karmaConfig": "projects/lac-mat-tel-input/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/lac-mat-tel-input/tsconfig.lib.json",
-              "projects/lac-mat-tel-input/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -138,18 +126,6 @@
               "projects/lac-mat-tel-input-sample/src/assets"
             ]
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/lac-mat-tel-input-sample/tsconfig.app.json",
-              "projects/lac-mat-tel-input-sample/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -168,15 +144,6 @@
             "production": {
               "devServerTarget": "lac-mat-tel-input-sample:serve:production"
             }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "projects/lac-mat-tel-input-sample-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }

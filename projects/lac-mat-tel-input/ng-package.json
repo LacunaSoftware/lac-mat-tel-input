@@ -2,9 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/lac-mat-tel-input",
   "lib": {
-    "entryFile": "src/public_api.ts",
-    "umdModuleIds": {
-      "libphonenumber-js": "1.7.58"
-    }
+    "entryFile": "src/public_api.ts"
   }
 }
