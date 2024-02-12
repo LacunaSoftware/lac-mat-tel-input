@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy, HostBinding, Input, Optional, Self, ElementRef, ViewChild, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
+import { Component, HostBinding, Input, Optional, Self, ElementRef, ViewChild, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
+import type { OnInit, OnDestroy } from '@angular/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { Subject } from 'rxjs';
-import { NgControl, NgModel } from '@angular/forms';
+import { NgControl } from '@angular/forms';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { getExampleNumber, parsePhoneNumberFromString, AsYouType, CountryCode, getCountryCallingCode } from 'libphonenumber-js';
@@ -38,6 +39,13 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
   _value: string;
   set value(v: string | null) {//whenever value changes -> this.stateChanges.next(); so form-field runs change detection
     this._value =  v ? `+${getCountryCallingCode(this.selectedCountry)} ${v}` : v;
+    if (this.internationalFormat && this._value) {
+      let phoneNumber = parsePhoneNumberFromString(this._value);
+
+      if (phoneNumber && phoneNumber.isValid()) {
+        this._value = phoneNumber.formatInternational();
+      }
+    }
     this.propagateChange(this._value);
     this.stateChanges.next();
   };
@@ -130,6 +138,16 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
   propagateChange = (_: any) => {
   }
   //ControlValueAccessor - END
+
+  private _internationalFormat = false;
+  @Input()
+  get internationalFormat() {
+    return this._internationalFormat;
+  }
+  set internationalFormat(format) {
+    this._internationalFormat = coerceBooleanProperty(format);
+    this.onInputChanged(this.phone);
+  }
 
   constructor(
     @Optional() @Self() public ngControl: NgControl,

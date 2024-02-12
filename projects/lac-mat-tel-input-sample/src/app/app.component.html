@@ -11,7 +11,7 @@
     <mat-form-field style="width: 100%;">
       <mat-label>Phone</mat-label>
       <lac-mat-country-selector matPrefix [preferredCountries]="['br']" [selectorFor]="input1"></lac-mat-country-selector>
-      <lac-mat-tel-input #input1 formControlName="phone"></lac-mat-tel-input>
+      <lac-mat-tel-input #input1 formControlName="phone" [internationalFormat]="useInternationalFormat"></lac-mat-tel-input>
       <mat-error>Invalid phone</mat-error>
     </mat-form-field>
     <mat-form-field>
@@ -39,6 +39,7 @@
       </div>
     </div>
     <div>
+      <mat-slide-toggle [(ngModel)]="useInternationalFormat" [ngModelOptions]="{standalone: true}">Use international format?</mat-slide-toggle>
       <button type="button" mat-button color="primary" (click)="toggleDisable('phone')">Disable/Enable</button>
       <button type="button" mat-button color="primary" (click)="toggleDisable('name')">Disable/Enable Name</button>
       <button type="button" mat-button color="warn" (click)="form1.reset()">Reset form</button>
@@ -49,7 +50,7 @@
   <mat-form-field style="width: 100%;">
     <mat-label>Phone number</mat-label>
     <lac-mat-country-selector matPrefix [preferredCountries]="['br']" [selectorFor]="modelInput"></lac-mat-country-selector>
-    <lac-mat-tel-input [(ngModel)]="phone" #modelInput [disabled]="phoneDisabled"></lac-mat-tel-input>
+    <lac-mat-tel-input [(ngModel)]="phone" #modelInput [disabled]="phoneDisabled" [internationalFormat]="useInternationalFormat"></lac-mat-tel-input>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Name</mat-label>
@@ -65,6 +66,7 @@
       </div>
     </div>
     <div>
+      <mat-slide-toggle [(ngModel)]="useInternationalFormat">Use international format?</mat-slide-toggle>
       <button type="button" mat-button color="primary" (click)="phoneDisabled = !phoneDisabled">Disable/Enable</button>
       <button type="button" mat-button color="primary" (click)="nameDisabled = !nameDisabled">Disable/Enable Name</button>
     </div>

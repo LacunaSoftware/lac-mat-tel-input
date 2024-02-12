@@ -10,7 +10,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/lac-mat-tel-input/tsconfig.lib.json",
             "project": "projects/lac-mat-tel-input/ng-package.json"
@@ -28,18 +28,6 @@
             "tsConfig": "projects/lac-mat-tel-input/tsconfig.spec.json",
             "karmaConfig": "projects/lac-mat-tel-input/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/lac-mat-tel-input/tsconfig.lib.json",
-              "projects/lac-mat-tel-input/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -53,7 +41,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
             "outputPath": "dist/lac-mat-tel-input-sample",
             "index": "projects/lac-mat-tel-input-sample/src/index.html",
             "main": "projects/lac-mat-tel-input-sample/src/main.ts",
@@ -67,7 +54,13 @@
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "projects/lac-mat-tel-input-sample/src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -80,9 +73,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -98,23 +89,24 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "lac-mat-tel-input-sample:build"
+            "buildTarget": "lac-mat-tel-input-sample:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "lac-mat-tel-input-sample:build:production"
+              "buildTarget": "lac-mat-tel-input-sample:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "lac-mat-tel-input-sample:build"
+            "buildTarget": "lac-mat-tel-input-sample:build"
           }
         },
         "test": {
@@ -132,18 +124,6 @@
             "assets": [
               "projects/lac-mat-tel-input-sample/src/favicon.ico",
               "projects/lac-mat-tel-input-sample/src/assets"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/lac-mat-tel-input-sample/tsconfig.app.json",
-              "projects/lac-mat-tel-input-sample/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
             ]
           }
         }
@@ -165,18 +145,8 @@
               "devServerTarget": "lac-mat-tel-input-sample:serve:production"
             }
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "projects/lac-mat-tel-input-sample-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     }
-  },
-  "defaultProject": "lac-mat-tel-input-sample"
+  }
 }
