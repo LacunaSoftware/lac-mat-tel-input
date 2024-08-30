@@ -37,14 +37,14 @@ export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldC
   //the value of the FormFieldControl
   _value: string;
   set value(v: string | null) {//whenever value changes -> this.stateChanges.next(); so form-field runs change detection
-	this._value = v ? `+${getCountryCallingCode(this.selectedCountry)} ${v}` : v;
+    this._value = v ? `+${getCountryCallingCode(this.selectedCountry)} ${v}` : v;
 
-	if (this.firstChange) {
-		this.firstChange = false;
-		if (this._value == this.ngControl?.value) {
-			return;
-		}
-	}
+    if (this.firstChange) {
+      this.firstChange = false;
+      if (this._value == this.ngControl?.value) {
+        return;
+      }
+    }
 	
     this.propagateChange(this._value);
     this.stateChanges.next();
