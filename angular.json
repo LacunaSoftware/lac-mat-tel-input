@@ -39,12 +39,15 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/lac-mat-tel-input-sample",
+            "outputPath": {
+              "base": "dist/lac-mat-tel-input-sample"
+            },
             "index": "projects/lac-mat-tel-input-sample/src/index.html",
-            "main": "projects/lac-mat-tel-input-sample/src/main.ts",
-            "polyfills": "projects/lac-mat-tel-input-sample/src/polyfills.ts",
+            "polyfills": [
+              "projects/lac-mat-tel-input-sample/src/polyfills.ts"
+            ],
             "tsConfig": "projects/lac-mat-tel-input-sample/tsconfig.app.json",
             "assets": [
               "projects/lac-mat-tel-input-sample/src/favicon.ico",
@@ -55,12 +58,11 @@
               "projects/lac-mat-tel-input-sample/src/styles.css"
             ],
             "scripts": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "browser": "projects/lac-mat-tel-input-sample/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -75,8 +77,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
