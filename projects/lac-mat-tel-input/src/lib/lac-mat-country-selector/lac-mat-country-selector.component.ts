@@ -7,11 +7,12 @@ import { Observable, Subscription } from 'rxjs';
 import { MatInput } from '@angular/material/input';
 
 @Component({
-  selector: 'lac-mat-country-selector',
-  templateUrl: './lac-mat-country-selector.component.html',
-  styleUrls: ['./lac-mat-country-selector.component.scss'],
-  providers: [CountryCode],
-  encapsulation: ViewEncapsulation.None
+    selector: 'lac-mat-country-selector',
+    templateUrl: './lac-mat-country-selector.component.html',
+    styleUrls: ['./lac-mat-country-selector.component.scss'],
+    providers: [CountryCode],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class LacMatCountrySelectorComponent implements OnInit, OnDestroy {
 

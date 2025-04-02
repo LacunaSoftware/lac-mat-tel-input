@@ -3,9 +3,10 @@ import { UntypedFormBuilder, UntypedFormGroup, FormControl } from '@angular/form
 import { phoneNumberValidator } from 'projects/lac-mat-tel-input/src/lib/lac-mat-tel-input.validator';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    standalone: false
 })
 export class AppComponent implements OnInit {
   title = 'lac-mat-tel-input-sample';

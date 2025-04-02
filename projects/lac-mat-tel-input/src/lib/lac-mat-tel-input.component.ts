@@ -10,10 +10,11 @@ import { getExampleNumber, parsePhoneNumberFromString, AsYouType, CountryCode, g
 import { Examples } from './data/country-code';
 
 @Component({
-  selector: 'lac-mat-tel-input',
-  templateUrl: './lac-mat-tel-input.component.html',
-  styleUrls: ['./lac-mat-tel-input.component.scss'],
-  providers: [{provide: MatFormFieldControl, useExisting: LacMatTelInputComponent}]
+    selector: 'lac-mat-tel-input',
+    templateUrl: './lac-mat-tel-input.component.html',
+    styleUrls: ['./lac-mat-tel-input.component.scss'],
+    providers: [{ provide: MatFormFieldControl, useExisting: LacMatTelInputComponent }],
+    standalone: false
 })
 export class LacMatTelInputComponent implements OnInit, OnDestroy, MatFormFieldControl<string> {
   @Output()
