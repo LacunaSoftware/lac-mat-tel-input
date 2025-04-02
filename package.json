@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve --port 4201",
     "build": "ng build",
-    "build_lib": "ng build --configuration production lac-mat-tel-input",
+    "build:prod": "ng build --configuration production lac-mat-tel-input",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
